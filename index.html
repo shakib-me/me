@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Md Shakib Hossain | Full-Stack Developer</title>
+    <link rel="icon" type="image/jpeg" href="shakib.jpeg">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #1d4ed8;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        /* Dark mode styles */
+        .dark {
+            color-scheme: dark;
+        }
+        
+        .dark body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+        
+        /* Smooth transitions */
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 300ms;
+        }
+        
+        /* Card hover effect */
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Image backgrounds */
+        .hero-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .dark .hero-bg {
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), 
+                        url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+        }
+        
+        .about-bg {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                        url('https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .dark .about-bg {
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), 
+                        url('https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80');
+        }
+        
+        .skills-bg {
+            background: linear-gradient(rgba(249, 250, 251, 0.9), rgba(249, 250, 251, 0.9)), 
+                        url('https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .dark .skills-bg {
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), 
+                        url('https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+        }
+        
+        /* Image Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 12px;
+            height: 200px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 20px;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        /* Modal for image viewing */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 24px;
+            transition: background 0.3s;
+        }
+        
+        .modal-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .prev-btn {
+            left: 20px;
+        }
+        
+        .next-btn {
+            right: 20px;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Image Modal -->
+    <div id="imageModal" class="image-modal">
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+        <button class="modal-nav prev-btn" onclick="prevImage()">❮</button>
+        <img id="modalImage" class="modal-content" src="" alt="">
+        <button class="modal-nav next-btn" onclick="nextImage()">❯</button>
+    </div>
+    
+    <!-- Header / Navbar -->
+    <header class="fixed w-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm z-50 shadow-sm">
+        <nav class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img 
+                        src="logo.png" 
+                        alt="Shakib.dev Logo"
+                        class="h-12 w-auto object-contain"
+                    >
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium">Home</a>
+                    <a href="#about" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium">About</a>
+                    <a href="#skills" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium">Skills</a>
+                    <a href="#projects" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium">Projects</a>
+                    <a href="#gallery" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium">Gallery</a>
+                    <a href="#contact" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium">Contact</a>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                        <i id="sunIcon" class="fas fa-sun text-yellow-500"></i>
+                        <i id="moonIcon" class="fas fa-moon text-blue-400 hidden"></i>
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg bg-gray-100 dark:bg-gray-700">
+                    <i class="fas fa-bars text-gray-700 dark:text-gray-300"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-2">
+                <div class="flex flex-col space-y-4">
+                    <a href="#home" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2">Home</a>
+                    <a href="#about" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2">About</a>
+                    <a href="#skills" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2">Skills</a>
+                    <a href="#projects" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2">Projects</a>
+                    <a href="#gallery" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2">Gallery</a>
+                    <a href="#contact" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2">Contact</a>
+                    
+                    <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
+                        <button id="mobileThemeToggle" class="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
+                            <i id="mobileSunIcon" class="fas fa-sun text-yellow-500"></i>
+                            <i id="mobileMoonIcon" class="fas fa-moon text-blue-400 hidden"></i>
+                            <span>Toggle Theme</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center pt-16 px-6 hero-bg text-white">
+        <div class="max-w-6xl mx-auto w-full">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <!-- Status Badge -->
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-blue-500/20 backdrop-blur-sm mb-8">
+                        <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                        <span class="text-sm font-medium">Open to Work</span>
+                    </div>
+                    
+                    <!-- Main Heading -->
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                        Hi, I'm <span class="text-blue-400">Md Shakib Hossain</span>
+                    </h1>
+                    
+                    <!-- Subtitle -->
+                    <h2 class="text-2xl md:text-3xl text-gray-200 mb-8">
+                        Full-Stack Developer | Python & Django Expert | React Specialist
+                    </h2>
+                    
+                    <!-- Description -->
+                    <p class="text-lg text-gray-300 mb-10 leading-relaxed">
+                        I build secure, scalable, and elegant web solutions with clean, maintainable code. 
+                        Specializing in Python/Django and React.js applications with modern technologies.
+                    </p>
+                    
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-wrap gap-4 mb-12">
+                        <a href="#projects" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all">
+                            View Projects
+                        </a>
+                        <a href="#contact" class="px-8 py-3 border-2 border-white text-white hover:bg-white/10 font-medium rounded-lg transition-all">
+                            Contact Me
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Profile Image -->
+                <div class="flex justify-center">
+                    <div class="relative">
+                        <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-8 border-white/30 shadow-2xl">
+                            <img src="shakib.jpeg" 
+                                 alt="Profile Photo" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                        
+                        <!-- Floating Tech Icons -->
+                        <div class="absolute -top-4 -left-4 w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm shadow-lg flex items-center justify-center">
+                            <i class="fab fa-python text-3xl text-white"></i>
+                        </div>
+                        <div class="absolute -bottom-4 -right-4 w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm shadow-lg flex items-center justify-center">
+                            <i class="fab fa-react text-3xl text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6 about-bg">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">About Me</h2>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- About Content -->
+                <div class="space-y-6">
+                    <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                        I'm a passionate Full-Stack Developer with expertise in Python, Django, and React.js. 
+                        Over the past few years, I've built and deployed several Python/Django applications 
+                        integrating modern technologies like React.js, Docker, and PostgreSQL/MySQL.
+                    </p>
+                    
+                    <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                        My passion is building secure, scalable, and elegant web solutions with clean, 
+                        maintainable code. I'm currently seeking Python Developer roles focused on 
+                        Django, REST API development, and Full-Stack web projects.
+                    </p>
+                    
+                    <div class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl">
+                        <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">
+                            Open to Opportunities in:
+                        </h3>
+
+                        <div class="flex flex-wrap gap-3">
+
+                            <!-- Bangladesh -->
+                            <span class="px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-lg">
+                                Bangladesh 🇧🇩
+                            </span>
+
+                            <!-- North America -->
+                            <span class="px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-lg">
+                                United States 🇺🇸
+                            </span>
+                            <span class="px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-lg">
+                                Canada 🇨🇦
+                            </span>
+
+                            <!-- Europe -->
+                            <span class="px-4 py-2 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-lg">
+                                United Kingdom 🇬🇧
+                            </span>
+                            <span class="px-4 py-2 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-lg">
+                                Germany 🇩🇪
+                            </span>
+                            <span class="px-4 py-2 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-lg">
+                                Netherlands 🇳🇱
+                            </span>
+                            <span class="px-4 py-2 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-lg">
+                                Sweden 🇸🇪
+                            </span>
+                            <span class="px-4 py-2 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-lg">
+                                Switzerland 🇨🇭
+                            </span>
+
+                            <!-- Middle East -->
+                            <span class="px-4 py-2 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 rounded-lg">
+                                Dubai (UAE) 🇦🇪
+                            </span>
+                            <span class="px-4 py-2 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 rounded-lg">
+                                Saudi Arabia 🇸🇦
+                            </span>
+                            <span class="px-4 py-2 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 rounded-lg">
+                                Qatar 🇶🇦
+                            </span>
+
+                            <!-- Asia-Pacific -->
+                            <span class="px-4 py-2 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 rounded-lg">
+                                Singapore 🇸🇬
+                            </span>
+                            <span class="px-4 py-2 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 rounded-lg">
+                                Japan 🇯🇵
+                            </span>
+                            <span class="px-4 py-2 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 rounded-lg">
+                                South Korea 🇰🇷
+                            </span>
+                            <span class="px-4 py-2 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 rounded-lg">
+                                Australia 🇦🇺
+                            </span>
+
+                            <!-- Remote -->
+                            <span class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 rounded-lg">
+                                Remote / Worldwide 🌍
+                            </span>
+
+                        </div>
+                    </div>
+
+                </div>
+                
+                <!-- Skills Preview -->
+                <div class="space-y-6">
+                    <div class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl">
+                        <h3 class="text-xl font-bold mb-6 text-gray-800 dark:text-white">Core Expertise</h3>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-700 dark:text-gray-300">Python & Django</span>
+                                    <span class="font-bold text-blue-600 dark:text-blue-400">95%</span>
+                                </div>
+                                <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-600 rounded-full" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-700 dark:text-gray-300">Django REST Framework</span>
+                                    <span class="font-bold text-blue-600 dark:text-blue-400">92%</span>
+                                </div>
+                                <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-600 rounded-full" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-700 dark:text-gray-300">React & Next.js</span>
+                                    <span class="font-bold text-blue-600 dark:text-blue-400">88%</span>
+                                </div>
+                                <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-600 rounded-full" style="width: 88%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-6 skills-bg">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Technical Skills</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Backend Skills -->
+                <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm p-8 rounded-xl shadow-sm card-hover">
+                    <div class="w-16 h-16 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-6">
+                        <i class="fas fa-server text-3xl text-blue-600 dark:text-blue-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Backend Development</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Python & Django</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Django REST Framework</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>API Development</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Authentication Systems</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>PostgreSQL & MySQL</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Frontend Skills -->
+                <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm p-8 rounded-xl shadow-sm card-hover">
+                    <div class="w-16 h-16 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-6">
+                        <i class="fas fa-code text-3xl text-blue-600 dark:text-blue-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Frontend Development</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>React.js & Next.js</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>HTML5, CSS3, JavaScript</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Tailwind CSS</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Responsive Design</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>UI/UX Implementation</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- DevOps & Tools -->
+                <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm p-8 rounded-xl shadow-sm card-hover">
+                    <div class="w-16 h-16 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-6">
+                        <i class="fas fa-tools text-3xl text-blue-600 dark:text-blue-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">DevOps & Tools</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Docker & Containerization</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Git & Version Control</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>CI/CD Pipelines</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>AWS & Deployment</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Virtual Environments</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Social Media Links -->
+            <div class="mt-16 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm p-8 rounded-xl shadow-sm">
+                <h3 class="text-2xl font-bold text-center mb-8">Connect With Me</h3>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <!-- GitHub -->
+                    <a href="https://github.com/mdshakibhossai" target="_blank" class="flex flex-col items-center group">
+                        <div class="w-16 h-16 rounded-xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-2 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 transition-all">
+                            <i class="fab fa-github text-3xl"></i>
+                        </div>
+                        <span class="text-sm font-medium">GitHub</span>
+                    </a>
+                    
+                    <!-- LinkedIn -->
+                    <a href="https://lnkd.in/g6CAfvkh" target="_blank" class="flex flex-col items-center group">
+                        <div class="w-16 h-16 rounded-xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-2 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 transition-all">
+                            <i class="fab fa-linkedin text-3xl text-blue-700 dark:text-blue-400"></i>
+                        </div>
+                        <span class="text-sm font-medium">LinkedIn</span>
+                    </a>
+                    
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/mdshakibdev" class="flex flex-col items-center group">
+                        <div class="w-16 h-16 rounded-xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-2 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 transition-all">
+                            <i class="fab fa-facebook text-3xl text-blue-600"></i>
+                        </div>
+                        <span class="text-sm font-medium">Facebook</span>
+                    </a>
+                    
+                    <!-- Twitter/X -->
+                    <a href="https://x.com/mdshakibcode" class="flex flex-col items-center group">
+                        <div class="w-16 h-16 rounded-xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-2 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 transition-all">
+                            <i class="fab fa-twitter text-3xl text-blue-400"></i>
+                        </div>
+                        <span class="text-sm font-medium">Twitter/X</span>
+                    </a>
+                    
+                    <!-- YouTube -->
+                    <a href="https://www.youtube.com/@MdShakibHoss" class="flex flex-col items-center group">
+                        <div class="w-16 h-16 rounded-xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-2 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 transition-all">
+                            <i class="fab fa-youtube text-3xl text-red-600"></i>
+                        </div>
+                        <span class="text-sm font-medium">YouTube</span>
+                    </a>
+                    
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/mdshakibdev?igsh=MXMxejJpZ3pjNWZrbw==" class="flex flex-col items-center group">
+                        <div class="w-16 h-16 rounded-xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-2 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 transition-all">
+                            <i class="fab fa-instagram text-3xl text-pink-600"></i>
+                        </div>
+                        <span class="text-sm font-medium">Instagram</span>
+                    </a>
+                    
+                    <!-- WhatsApp -->
+                    <a href="https://wa.me/8801775534350" target="_blank" class="flex flex-col items-center group">
+                        <div class="w-16 h-16 rounded-xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-2 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 transition-all">
+                            <i class="fab fa-whatsapp text-3xl text-green-600"></i>
+                        </div>
+                        <span class="text-sm font-medium">WhatsApp</span>
+                    </a>
+                    
+                    <!-- Telegram -->
+                    <a href="https://web.telegram.org/a/#2033393069" class="flex flex-col items-center group">
+                        <div class="w-16 h-16 rounded-xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-2 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 transition-all">
+                            <i class="fab fa-telegram text-3xl text-blue-500"></i>
+                        </div>
+                        <span class="text-sm font-medium">Telegram</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-6 bg-white dark:bg-gray-800">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Featured Projects</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden shadow-sm card-hover">
+                    <div class="h-48 bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center">
+                        <i class="fas fa-shopping-cart text-white text-5xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3">E-Commerce Platform</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">
+                            Full-featured e-commerce solution with Django backend and React frontend.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-sm rounded">Django</span>
+                            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-sm rounded">React</span>
+                            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-sm rounded">PostgreSQL</span>
+                        </div>
+                        <a href="https://github.com/mdshakibhossai" target="_blank" class="text-blue-600 dark:text-blue-400 font-medium hover:underline">
+                            View Project →
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden shadow-sm card-hover">
+                    <div class="h-48 bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center">
+                        <i class="fas fa-tasks text-white text-5xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3">Task Management App</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">
+                            Real-time collaborative task manager with Django Channels and React.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-sm rounded">Django REST</span>
+                            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-sm rounded">WebSocket</span>
+                            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-sm rounded">Redis</span>
+                        </div>
+                        <a href="https://github.com/mdshakibhossai" target="_blank" class="text-blue-600 dark:text-blue-400 font-medium hover:underline">
+                            View Project →
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden shadow-sm card-hover">
+                    <div class="h-48 bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center">
+                        <i class="fas fa-chart-line text-white text-5xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3">Analytics Dashboard</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">
+                            Data visualization platform with interactive charts and Django backend.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-sm rounded">Django</span>
+                            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-sm rounded">Chart.js</span>
+                            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-sm rounded">Docker</span>
+                        </div>
+                        <a href="https://github.com/mdshakibhossai" target="_blank" class="text-blue-600 dark:text-blue-400 font-medium hover:underline">
+                            View Project →
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="https://github.com/mdshakibhossai" target="_blank" class="inline-flex items-center px-8 py-3 bg-gray-800 dark:bg-gray-700 text-white font-medium rounded-lg hover:bg-gray-900 dark:hover:bg-gray-600 transition-all">
+                    <i class="fab fa-github mr-3"></i>
+                    View All Projects on GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 px-6 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Project Gallery</h2>
+            
+            <!-- Gallery Navigation -->
+            <div class="flex justify-center mb-8">
+                <div class="inline-flex rounded-lg border border-gray-300 dark:border-gray-700 p-1">
+                    <button class="gallery-filter px-4 py-2 rounded-md bg-blue-600 text-white" data-filter="all">All</button>
+                    <button class="gallery-filter px-4 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800" data-filter="web">Web Apps</button>
+                    <button class="gallery-filter px-4 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800" data-filter="mobile">Mobile</button>
+                    <button class="gallery-filter px-4 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800" data-filter="design">UI/UX</button>
+                </div>
+            </div>
+            
+            <!-- Gallery Grid -->
+            <div class="gallery-grid">
+                <!-- Image 1 -->
+                <div class="gallery-item" data-category="web">
+                    <img src="1.png">
+                    <div class="gallery-overlay">
+                        <h3 class="font-bold">E-commerce Platform</h3>
+                        <p class="text-sm">Django + React Full Stack</p>
+                    </div>
+                </div>
+                
+                <!-- Image 2 -->
+                <div class="gallery-item" data-category="web">
+                    <img src="2.png">
+                    <div class="gallery-overlay">
+                        <h3 class="font-bold">Analytics Dashboard</h3>
+                        <p class="text-sm">Data Visualization</p>
+                    </div>
+                </div>
+                
+                <!-- Image 3 -->
+                <div class="gallery-item" data-category="mobile">
+                    <img src="3.png">
+                    <div class="gallery-overlay">
+                        <h3 class="font-bold">Task Management App</h3>
+                        <p class="text-sm">React Native</p>
+                    </div>
+                </div>
+                
+                <!-- Image 4 -->
+                <div class="gallery-item" data-category="design">
+                    <img src="4.png">
+                    <div class="gallery-overlay">
+                        <h3 class="font-bold">UI/UX Design</h3>
+                        <p class="text-sm">Figma Design System</p>
+                    </div>
+                </div>
+                
+                <!-- Image 5 -->
+                <div class="gallery-item" data-category="web">
+                    <img src="5.png">
+                    <div class="gallery-overlay">
+                        <h3 class="font-bold">REST API Service</h3>
+                        <p class="text-sm">Django REST Framework</p>
+                    </div>
+                </div>
+                
+                <!-- Image 6 -->
+                <div class="gallery-item" data-category="web">
+                    <img src="6.png">
+                    <div class="gallery-overlay">
+                        <h3 class="font-bold">Code Architecture</h3>
+                        <p class="text-sm">Clean Code Structure</p>
+                    </div>
+                </div>
+                <!-- Image 7 -->
+                <div class="gallery-item" data-category="web">
+                    <img src="7.png">
+                    <div class="gallery-overlay">
+                        <h3 class="font-bold">Code Architecture</h3>
+                        <p class="text-sm">Clean Code Structure</p>
+                    </div>
+                </div>
+                <!-- Image 8 -->
+                <div class="gallery-item" data-category="web">
+                    <img src="8.png">
+                    <div class="gallery-overlay">
+                        <h3 class="font-bold">Code Architecture</h3>
+                        <p class="text-sm">Clean Code Structure</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-6 bg-white dark:bg-gray-800">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Get In Touch</h2>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-xl shadow-sm">
+                    <form id="contactForm" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-gray-700 dark:text-gray-300 mb-2">Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 outline-none transition-all" required>
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 outline-none transition-all" required>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-gray-700 dark:text-gray-300 mb-2">Message</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 outline-none transition-all" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all">
+                            Send Message
+                        </button>
+                        
+                        <div id="formMessage" class="mt-4 text-center hidden"></div>
+                    </form>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="space-y-8">
+                    <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-xl shadow-sm">
+                        <h3 class="text-2xl font-bold mb-6">Contact Information</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-4">
+                                    <i class="fas fa-envelope text-blue-600 dark:text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-white mb-1">Email</h4>
+                                    <a href="mailto:mdshakibhossa@gmail.com" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">mdshakibhossa@gmail.com</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-4">
+                                    <i class="fab fa-whatsapp text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-white mb-1">WhatsApp</h4>
+                                    <a href="https://wa.me/8801775534350" target="_blank" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">+880 1775 534350</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-4">
+                                    <i class="fas fa-map-marker-alt text-red-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 dark:text-white mb-1">Location</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">Open to opportunities worldwide</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-xl shadow-sm">
+                        <h3 class="text-2xl font-bold mb-6">Quick Links</h3>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="https://github.com/mdshakibhossai" target="_blank" class="flex items-center px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all">
+                                <i class="fab fa-github mr-2"></i> GitHub
+                            </a>
+                            <a href="https://lnkd.in/g6CAfvkh" target="_blank" class="flex items-center px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all">
+                                <i class="fab fa-linkedin mr-2 text-blue-700 dark:text-blue-400"></i> LinkedIn
+                            </a>
+                            <a href="https://wa.me/8801775534350" target="_blank" class="flex items-center px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all">
+                                <i class="fab fa-whatsapp mr-2 text-green-600"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+<footer class="py-12 px-6 bg-[#f4f4f5] dark:bg-gray-900 text-gray-800 border-t border-gray-200">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+            
+            <div class="text-center md:text-left">
+                <div class="flex justify-center md:justify-start items-center mb-3">
+                    <img 
+                        src="logo.png" 
+                        alt="Shakib.dev Logo"
+                        class="h-14 w-auto object-contain hover:scale-105 transition-transform duration-300"
+                    >
+                </div>
+                <p class="text-gray-600 font-medium italic">Full-Stack Developer | Python & Django Expert</p>
+            </div>
+            
+            <div class="flex space-x-8">
+                <a href="https://github.com/mdshakibhossai" target="_blank" class="text-gray-500 hover:text-[#007acc] transition-colors duration-300">
+                    <i class="fab fa-github text-2xl"></i>
+                </a>
+                <a href="https://lnkd.in/g6CAfvkh" target="_blank" class="text-gray-500 hover:text-[#0a66c2] transition-colors duration-300">
+                    <i class="fab fa-linkedin text-2xl"></i>
+                </a>
+                <a href="https://wa.me/8801775534350" target="_blank" class="text-gray-500 hover:text-[#25d366] transition-colors duration-300">
+                    <i class="fab fa-whatsapp text-2xl"></i>
+                </a>
+            </div>
+            
+            <div class="text-center md:text-right">
+                <p class="text-gray-700 font-semibold">
+                    &copy; <span id="currentYear"></span> 
+                    <span class="text-[#e11d48]">Md Shakib Hossain</span>
+                </p>
+                <p class="text-gray-500 text-sm mt-1">
+                    Developed with <span class="text-red-500">❤️</span> by 
+                    <span class="text-[#007acc] font-medium">Shakib.dev</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // অটোমেটিক বর্তমান বছর সেট করার জন্য
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+</script>
+
+    <!-- JavaScript -->
+    <script>
+        // Set current year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Theme toggle function
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateThemeIcons(isDark);
+        }
+        
+        // Update theme icons
+        function updateThemeIcons(isDark) {
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            const mobileSunIcon = document.getElementById('mobileSunIcon');
+            const mobileMoonIcon = document.getElementById('mobileMoonIcon');
+            
+            if (isDark) {
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+                mobileSunIcon.classList.add('hidden');
+                mobileMoonIcon.classList.remove('hidden');
+            } else {
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+                mobileSunIcon.classList.remove('hidden');
+                mobileMoonIcon.classList.add('hidden');
+            }
+        }
+        
+        // Check for saved theme or prefer-color-scheme
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const savedTheme = localStorage.getItem('theme');
+        
+        // Apply saved theme or system preference
+        if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
+            document.documentElement.classList.add('dark');
+            updateThemeIcons(true);
+        } else {
+            updateThemeIcons(false);
+        }
+        
+        // Theme toggle event listeners
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        document.getElementById('mobileThemeToggle').addEventListener('click', toggleTheme);
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking a link
+        const mobileLinks = document.querySelectorAll('#mobileMenu a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // Contact form submission
+        const contactForm = document.getElementById('contactForm');
+        const formMessage = document.getElementById('formMessage');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // In a real implementation, you would send this data to a server
+            // For this demo, we'll just show a success message
+            formMessage.textContent = `Thank you, ${name}! Your message has been sent. I'll get back to you soon.`;
+            formMessage.className = 'mt-4 text-center text-green-600 dark:text-green-400 font-medium';
+            formMessage.classList.remove('hidden');
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                formMessage.classList.add('hidden');
+            }, 5000);
+        });
+        
+        // Gallery functionality
+        const galleryFilters = document.querySelectorAll('.gallery-filter');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const galleryImages = [
+            '1.png',
+            '2.png',
+            '3.png',
+            '4.png',
+            '5.png',
+            '6.png' ,
+            '7.png',
+            '8.png'
+        ];
+        
+        let currentImageIndex = 0;
+        
+        // Gallery filter
+        galleryFilters.forEach(filter => {
+            filter.addEventListener('click', () => {
+                // Update active filter
+                galleryFilters.forEach(f => f.classList.remove('bg-blue-600', 'text-white'));
+                galleryFilters.forEach(f => f.classList.add('hover:bg-gray-100', 'dark:hover:bg-gray-800'));
+                filter.classList.add('bg-blue-600', 'text-white');
+                filter.classList.remove('hover:bg-gray-100', 'dark:hover:bg-gray-800');
+                
+                const filterValue = filter.getAttribute('data-filter');
+                
+                // Filter items
+                galleryItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Image modal functionality
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        
+        // Open modal when clicking gallery items
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentImageIndex = index;
+                modalImage.src = galleryImages[index];
+                modal.style.display = 'flex';
+            });
+        });
+        
+        // Close modal
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+        
+        // Next image
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            modalImage.src = galleryImages[currentImageIndex];
+        }
+        
+        // Previous image
+        function prevImage() {
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            modalImage.src = galleryImages[currentImageIndex];
+        }
+        
+        // Close modal on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+        });
+        
+        // Close modal when clicking outside image
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
