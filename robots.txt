@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mdshakibhossai.github.io/me/sitemap.xml
+Sitemap: https://shakib-me.github.io/me/sitemap.xml
